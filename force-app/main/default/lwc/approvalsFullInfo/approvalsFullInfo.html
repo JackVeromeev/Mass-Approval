@@ -1,0 +1,129 @@
+<template>
+    <c-spinner if:true={showSpinner}></c-spinner>
+    <template if:false={userTool}>
+        <lightning-layout multiple-rows="true" class=slds-p-around_small>
+            <lightning-layout-item alignment-bump="right">
+                <lightning-button class="slds-m-left_x-small" variant="success"
+                                  label="Approve" title="Approve approval process"
+                                  onclick={handleApprove} disabled={disableActions}>
+                </lightning-button>
+                <lightning-button class="slds-m-left_x-small" variant="destructive"
+                                  label="Reject" title="Reject approval process"
+                                  onclick={handleReject} disabled={disableActions}>
+                </lightning-button>
+                <lightning-button class="slds-m-left_x-small" variant="brand-outline"
+                                  label="Reassign" title="Reassign approval process"
+                                  onclick={handleReassign} disabled={disableActions}>
+                </lightning-button>
+                <lightning-button if:true={isRecallAction} class="slds-m-left_x-small"
+                                  variant="brand-outline" label="Recall" title="Recall approval process"
+                                  onclick={handleRecall} disabled={disableActions}>
+                </lightning-button>
+            </lightning-layout-item>
+            <lightning-layout-item alignment-bump="left">
+                <lightning-button-group>
+                    <lightning-button class="slds-m-left_x-small" label="Select Field Display"
+                                      title="select field" onclick={handleSelectField}>
+                    </lightning-button>
+                </lightning-button-group>
+            </lightning-layout-item>
+        </lightning-layout>
+
+        <div class="slds-p-around_medium">
+            <div class="slds-text-heading_medium slds-text-align_center slds-p-bottom_medium">
+                {label.titleObject} {objectLabelName}
+            </div>
+            <lightning-datatable class="datatable"
+                                 key-field="id"
+                                 data={data}
+                                 columns={columns}
+                                 onrowaction={handleRowAction}
+                                 onsort={updateColumnSorting}
+                                 sorted-by={sortedBy}
+                                 sorted-direction={sortedDirection}
+                                 onrowselection={handleSelectedRows}>
+            </lightning-datatable>
+        </div>
+    </template>
+
+    <template if:true={userTool}>
+        <div class="slds-grid">
+            <lightning-button-group>
+                <div class="slds-col">
+                    <lightning-button class="slds-m-left_x-small" variant="success"
+                                      label="Approve" title="Approve approval process"
+                                      onclick={handleApprove} disabled={disableActions}>
+                    </lightning-button>
+                </div>
+                <div class="slds-col">
+                    <lightning-button class="slds-m-left_x-small" variant="destructive"
+                                      label="Reject" title="Reject approval process"
+                                      onclick={handleReject} disabled={disableActions}>
+                    </lightning-button>
+                </div>
+                <div class="slds-col">
+                    <lightning-button class="slds-m-left_x-small" variant="brand-outline"
+                                      label="Reassign" title="Reassign approval process"
+                                      onclick={handleReassign} disabled={disableActions}>
+                    </lightning-button>
+                </div>
+            </lightning-button-group>
+        </div>
+
+        <ul class="slds-m-around_medium">
+            <template for:each={data} for:item="info">
+                <li key={info.objectId}>
+                    <div class="slds-grid slds-p-around_small">
+                        <div class="slds-col slds-size_2-of-12 slds-text-align_center">
+                            <c-lightning-chekbox current={info}
+                                                 onchosenaction={handleChooseAction}>
+                            </c-lightning-chekbox>
+                        </div>
+                        <div>
+                            <div class="slds-col slds-size_12-of-12 ">
+                                <c-current-info-process is-mobile-phone={userTool}
+                                                        info={info}>
+                                </c-current-info-process>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </template>
+        </ul>
+    </template>
+
+    <template if:true={isShowSelectedFieldsModal}>
+        <c-dual-list-box-cmp object-api-name={objectApiName}
+                             options={options}
+                             values={valuesColumnsLabel}
+                             onclosemodal={handleCloseModal}
+                             onsendfield={handleSelectedField}>
+        </c-dual-list-box-cmp>
+    </template>
+
+    <template if:true={isShowCommentModal}>
+        <c-comment-component name-action={nameButton}
+                             height={height}
+                             mobile-device={userTool}
+                             selected-objects={selected}
+                             onclosemodal={handleCloseModal}>
+        </c-comment-component>
+    </template>
+
+    <template if:true={isShowReassignModal}>
+        <c-reassign-component users={users}
+                              height={height}
+                              mobile-device={userTool}
+                              selected-objects={selected}
+                              onclosemodal={handleCloseModal}>
+        </c-reassign-component>
+    </template>
+
+    <template if:true={isShowFullObjectField}>
+        <c-full-object-field object-id={objectId}
+                             object-name={objectType}
+                             onclosemodal={handleCloseModal}>
+        </c-full-object-field>
+    </template>
+
+</template>

@@ -1,0 +1,15 @@
+<template>
+    <template if:false={isMobilePhone}>
+        <a onclick={handleRedirectToObject}>{info.nameObject}</a>
+        <div>{info.objectType} - Submitted by {info.actorName}</div>
+        <div>Process by: {info.processName}</div>
+    </template>
+    <template if:true={isMobilePhone}>
+        <a onclick={handleRedirectToObject}>{info.nameObject}</a>
+        <div class="mobile">Object by: <span class="font">{info.objectType}</span></div>
+        <div class="mobile">Submitted by: <span class="font">{info.actorName}</span></div>
+        <div class="mobile">Process: <span class="font">{info.processName}</span></div>
+        <div class="mobile">Status: <span class="font">{info.statusProc}</span></div>
+        <div class="mobile">Description: <span class="font">{info.desc}</span></div>
+    </template>
+</template>

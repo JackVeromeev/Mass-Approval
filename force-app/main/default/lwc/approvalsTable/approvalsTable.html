@@ -1,0 +1,52 @@
+<template>
+    <template if:true={isHaveProcesses}>
+        <lightning-layout multiple-rows="true" >
+            <lightning-layout-item size="12" padding="around-medium">
+                <div class="slds-align_absolute-center">
+                    <table class="slds-table slds-table_resizable-cols"
+                           role="grid">
+                        <thead>
+                        <tr class="slds-line-height_reset">
+                            <template for:each={columns} for:item="column">
+                                <th key={column.label}
+                                    aria-label="Name"
+                                    aria-sort="none"
+                                    class="slds-is-resizable slds-is-sortable order-items-table_column slds-text-align_center"
+                                    scope="col">
+                          <span class="slds-truncate" title={column.title}>
+                              {column.label}
+                          </span>
+                                </th>
+                            </template>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <template for:each={tableInformation} for:item="row" for:index="index">
+                            <tr key={row.Id} aria-selected="false" class="slds-hint-parent" data-id={index}>
+                                <template for:each={row.columns} for:item="cell">
+                                    <td key={cell.ind} role="gridcell" class="slds-is-resizable">
+                                        <template if:true={cell.link}>
+                                            <a onclick={handleApprovalsOnObjects}
+                                               data-sobjname={cell.apiLabel} data-index={index}>{cell.value}</a>
+                                        </template>
+                                        <template if:false={cell.link}>
+                                            {cell.value}
+                                        </template>
+                                    </td>
+                                </template>
+                            </tr>
+                        </template>
+                        </tbody>
+                    </table>
+                </div>
+            </lightning-layout-item>
+        </lightning-layout>
+    </template>
+    <template if:false={isHaveProcesses}>
+        <div class="slds-p-around_medium">
+            <h2 class="slds-card__header-title slds-align-middle slds-text-align_center">
+                <span>{empty}</span>
+            </h2>
+        </div>
+    </template>
+</template>

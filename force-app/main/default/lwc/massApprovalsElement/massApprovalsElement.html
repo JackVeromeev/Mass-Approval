@@ -1,0 +1,49 @@
+<template>
+    <div if:true={isShowInformation}>
+        <div class="slds-grid">
+            <div class="slds-col slds-size_8-of-12 slds-p-around_small">
+                <div class="slds-box slds-theme_default">
+                    <c-approvals-table onapprovalinfo={handleApprovalInfo}></c-approvals-table>
+                </div>
+                <div if:true={isOpenFullInfo}>
+                    <div class="slds-box slds-theme_default fullInfo">
+                        <c-approvals-full-info full-info={approvalInfo} height={height}
+                                               onrerendertable={handleRerenderAction}
+                                               onshowinfo={handleShowInformation}
+                                               onclosedetail={handleCloseModal}
+                                               onclosetablefullinfo={closeFullInfoTable}>
+                        </c-approvals-full-info>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-col slds-size_4-of-12 slds-p-around_small">
+                <div class="slds-box slds-theme_default">
+                    <c-show-object-info object-name={objectApiName}
+                                        object-id={objectId}
+                                        object-label-name={objectLabelName}
+                                        onhandleapprove={handleAction}
+                                        onhandlereassign={handleAction}
+                                        onhandlereject={handleAction}
+                                        onclosemodal={handleCloseModal}>
+                    </c-show-object-info>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div if:false={isShowInformation}>
+        <div class="slds-box slds-theme_default">
+            <c-approvals-table onapprovalinfo={handleApprovalInfo}></c-approvals-table>
+        </div>
+        <div if:true={isOpenFullInfo}>
+            <div class="slds-box slds-theme_default fullInfo">
+                <c-approvals-full-info full-info={approvalInfo} height={height}
+                                       onrerendertable={handleRerenderAction}
+                                       onshowinfo={handleShowInformation}
+                                       onclosedetail={handleCloseModal}
+                                       onclosetablefullinfo={closeFullInfoTable}>
+                </c-approvals-full-info>
+            </div>
+        </div>
+    </div>
+</template>

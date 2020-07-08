@@ -1,0 +1,32 @@
+<template>
+    <header class="slds-modal__header slds-text-align_center slds-text-heading_medium">
+        {objectLabelName} {label.title}
+    </header>
+    <lightning-record-form
+            record-id={objectId}
+            object-api-name={objectName}
+            layout-type="Full"
+            columns="2"
+            mode="view">
+    </lightning-record-form>
+    <lightning-layout multiple-rows="true" class=slds-p-around_small>
+        <lightning-layout-item alignment-bump="right">
+            <lightning-button class="slds-m-left_x-small" variant="success" label="Approve"
+                              title="Approve approval process" onclick={handleApprove}>
+            </lightning-button>
+            <lightning-button class="slds-m-left_x-small" variant="destructive" label="Reject"
+                              title="Reject approval process" onclick={handleReject}>
+            </lightning-button>
+            <lightning-button class="slds-m-left_x-small" variant="brand-outline" label="Reassign"
+                              title="Reassign approval process" onclick={handleReassign}>
+            </lightning-button>
+        </lightning-layout-item>
+        <lightning-layout-item alignment-bump="left">
+            <lightning-button-group>
+                <lightning-button variant="brand" class="slds-p-around_xxx-small"
+                                  label="Cancel" title="Cancel" onclick={closeModal}>
+                </lightning-button>
+            </lightning-button-group>
+        </lightning-layout-item>
+    </lightning-layout>
+</template>

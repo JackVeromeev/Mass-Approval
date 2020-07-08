@@ -1,0 +1,99 @@
+<template>
+    <article class="slds-card">
+        <template if:false={isDontHaveApprovalProcesses}>
+
+            <lightning-layout>
+                <lightning-layout-item alignment-bump="right" class="title slds-p-left_large slds-p-top_large">
+                    <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                        <div class="slds-media__body">
+                            <h2 class="slds-card__header-title title">
+                                <span>{labels.title}</span>
+                            </h2>
+                        </div>
+                    </header>
+                </lightning-layout-item>
+
+                <lightning-layout-item alignment-bump="left" class="actions slds-p-around_small">
+                    <lightning-button-group>
+                        <lightning-button class="slds-m-left_x-small" variant="success"
+                                          label="Approve" title="Approve process"
+                                          onclick={handleApprove} disabled={disableActions}>
+                        </lightning-button>
+                        <lightning-button class="slds-m-left_x-small" variant="destructive"
+                                          label="Reject" title="Reject process"
+                                          onclick={handleReject} disabled={disableActions}>
+                        </lightning-button>
+                        <lightning-button class="slds-m-left_x-small" variant="brand-outline"
+                                          label="Reassign" title="Reassign process"
+                                          onclick={handleReassign} disabled={disableActions}>
+                        </lightning-button>
+                    </lightning-button-group>
+                </lightning-layout-item>
+
+            </lightning-layout>
+
+            <ul class="slds-m-around_medium">
+                <template for:each={data} for:item="info">
+                    <li key={info.objectId}>
+                        <lightning-layout multiple-rows="true" class="slds-p-around_xxx-small">
+                            <lightning-layout-item alignment-bump="right" class="deleteMarginRight">
+                                <c-lightning-chekbox current={info}
+                                                     onchosenaction={handleChooseAction}>
+                                </c-lightning-chekbox>
+                            </lightning-layout-item>
+                            <lightning-layout-item alignment-bump="right" class="deleteMarginRight">
+                                <c-current-info-process info={info}></c-current-info-process>
+                            </lightning-layout-item>
+                            <lightning-layout-item alignment-bump="left">
+                                <c-lightning-action current={info} is-show-buttons={disableActions}
+                                                    onchosenaction={handleAction}>
+                                </c-lightning-action>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </li>
+                </template>
+            </ul>
+
+            <footer class="slds-card__footer">
+                <a class="slds-card__footer-action" onclick={handleRedirect}>
+                    {labels.viewAll}
+                </a>
+            </footer>
+        </template>
+
+        <template if:true={isDontHaveApprovalProcesses}>
+            <div class="slds-card__header slds-grid">
+                <lightning-layout>
+                    <lightning-layout-item alignment-bump="right" class="title slds-p-top_xx-small">
+                        <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                            <div class="slds-media__body">
+                                <h2 class="slds-card__header-title title">
+                                    <span>{labels.title}</span>
+                                </h2>
+                            </div>
+                        </header>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </div>
+            <div class="slds-p-bottom_large">
+                <h2 class="slds-text-body_regular slds-align-middle slds-text-align_center">
+                    <span>{labels.empty}</span>
+                </h2>
+            </div>
+        </template>
+    </article>
+
+    <template if:true={isShowCommentModal}>
+        <c-comment-component name-action={nameButton}
+                             selected-objects={selected}
+                             onclosemodal={handleCloseActions}>
+        </c-comment-component>
+    </template>
+
+    <template if:true={isShowReassignModal}>
+        <c-reassign-component users={users}
+                              selected-objects={selected}
+                              onclosemodal={handleCloseReassign}>
+        </c-reassign-component>
+    </template>
+</template>

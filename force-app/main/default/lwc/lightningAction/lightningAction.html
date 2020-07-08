@@ -1,0 +1,32 @@
+<template>
+    <template if:true={isShowButtons}>
+        <div class="slds-no-flex">
+            <div class="slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open">
+                <lightning-button-icon icon-name="utility:down" variant="border-filled"
+                                       size="x-small" alternative-text="Show More"
+                                       slot="actions" onclick={handleShowActions}>
+                </lightning-button-icon>
+                <div class="slds-dropdown slds-dropdown_actions slds-dropdown_right"
+                     if:true={isShowActions}>
+                    <ul class="slds-dropdown__list" role="menu">
+                        <li class="slds-dropdown__item" role="presentation">
+                            <a role="menuitem" tabindex="0" onclick={handleApprove}>
+                                <span class="slds-truncate" title="Approve">{labels.approve}</span>
+                            </a>
+                        </li>
+                        <li class="slds-dropdown__item" role="presentation">
+                            <a role="menuitem" tabindex="-1" onclick={handleReject}>
+                                <span class="slds-truncate" title="Reject">{labels.reject}</span>
+                            </a>
+                        </li>
+                        <li class="slds-dropdown__item" role="presentation">
+                            <a role="menuitem" tabindex="-1" onclick={handleReassign}>
+                                <span class="slds-truncate" title="Reassign">{labels.reassign}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </template>
+</template>
